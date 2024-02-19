@@ -1,0 +1,75 @@
+:root {
+    --clr-bg: hsl(0, 0%, 90%);
+    --clr-light: white;
+    --clr-dark: hsl(0, 0%, 10%);
+}
+
+body {
+    margin: 0;
+
+    height: 100vh;
+    display: grid;
+    place-content: center;
+
+    background-color: var(--clr-bg);
+}
+
+input {
+    display: none;
+}
+
+.card {
+    position: relative;
+
+    height: 70vh;
+    aspect-ratio: 2 / 3;
+    
+    perspective: 2000px;
+}
+
+.card-front,
+.card-back {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-content: center;
+    transition: 1s linear;
+    backface-visibility: hidden;
+}
+
+.card-front { 
+    background-color: var(--clr-light);
+    z-index: 1;
+}
+
+:is(.card-front, .card-back)::before {
+    content: '';
+    display: block;
+
+    height: 10vh;
+    aspect-ratio: 1 / 1;
+
+    border: 1.2vh solid;
+}
+
+.card-front::before {
+    border-color: var(--clr-dark);
+    border-radius: 50%;
+}
+
+.card-back::before {
+    border-color: var(--clr-light);
+}
+
+.card-back { 
+    background-color: var(--clr-dark);
+    transform: rotateX(-180deg);
+}
+
+input:checked + .card > .card-front {
+    transform: rotateX(180deg);
+}
+
+input:checked + .card > .card-back {
+    transform: rotateX(0);
+}
